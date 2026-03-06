@@ -14,10 +14,11 @@ public class AddressBookMain {
 
         while (true) {
 
-            System.out.println("\n----- Address Book Menu -----");
+        	System.out.println("\n----- Address Book Menu -----");
             System.out.println("1. Add Contact");
             System.out.println("2. Display Contacts");
-            System.out.println("3. Exit");
+            System.out.println("3. Edit Contact");
+            System.out.println("4. Exit");
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -51,7 +52,16 @@ public class AddressBookMain {
                     System.out.print("Email: ");
                     String email = scanner.nextLine();
 
-                    Contact contact = new Contact(firstName, lastName, address, city, state, zip, email, phone);
+                    Contact contact = new Contact(
+                            firstName,
+                            lastName,
+                            address,
+                            city,
+                            state,
+                            zip,
+                            phone,
+                            email
+                    );
 
                     service.addContact(contact);
 
@@ -63,7 +73,40 @@ public class AddressBookMain {
                     break;
 
                 case 3:
-                    System.out.println("Exiting Address Book...");
+
+                    System.out.print("Enter First Name of contact to edit: ");
+                    String searchName = scanner.nextLine();
+
+                    Contact existingContact = service.findContact(searchName);
+
+                    if (existingContact == null) {
+                        System.out.println("Contact not found!");
+                        break;
+                    }
+
+                    System.out.print("New Address: ");
+                    existingContact.setAddress(scanner.nextLine());
+
+                    System.out.print("New City: ");
+                    existingContact.setCity(scanner.nextLine());
+
+                    System.out.print("New State: ");
+                    existingContact.setState(scanner.nextLine());
+
+                    System.out.print("New Zip: ");
+                    existingContact.setZip(scanner.nextLine());
+
+                    System.out.print("New Phone: ");
+                    existingContact.setPhoneNumber(scanner.nextLine());
+
+                    System.out.print("New Email: ");
+                    existingContact.setEmail(scanner.nextLine());
+
+                    System.out.println("Contact Updated Successfully!");
+                    break;
+
+                case 4:
+                    System.out.println("Exiting...");
                     return;
 
                 default:
