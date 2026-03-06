@@ -5,6 +5,7 @@ import java.util.List;
 import com.addressbookapp.model.Contact;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AddressBookService {
@@ -35,6 +36,23 @@ public class AddressBookService {
         }
 
         return null;
+    }
+    
+    public boolean deleteContact(String firstName) {
+
+        Iterator<Contact> iterator = contactList.iterator();
+
+        while (iterator.hasNext()) {
+
+            Contact contact = iterator.next();
+
+            if (contact.getFirstName().equalsIgnoreCase(firstName)) {
+                iterator.remove();
+                return true;
+            }
+        }
+
+        return false;
     }
     
 }
