@@ -27,7 +27,11 @@ public class AddressBookMain {
 
             switch (choice) {
 
-                case 1:
+            case 1:
+
+                char addMore;
+
+                do {
 
                     System.out.print("First Name: ");
                     String firstName = scanner.nextLine();
@@ -53,22 +57,20 @@ public class AddressBookMain {
                     System.out.print("Email: ");
                     String email = scanner.nextLine();
 
-                    Contact contact = new Contact(
-                            firstName,
-                            lastName,
-                            address,
-                            city,
-                            state,
-                            zip,
-                            phone,
-                            email
-                    );
+                    Contact contact = new Contact(firstName, lastName, address, city, state, zip, email, phone);
 
                     service.addContact(contact);
 
                     System.out.println("Contact Added Successfully!");
-                    break;
 
+                    System.out.print("Do you want to add another contact? (y/n): ");
+                    addMore = scanner.next().charAt(0);
+                    scanner.nextLine();
+
+                } while (addMore == 'y' || addMore == 'Y');
+
+                break;
+                
                 case 2:
                     service.displayContacts();
                     break;
