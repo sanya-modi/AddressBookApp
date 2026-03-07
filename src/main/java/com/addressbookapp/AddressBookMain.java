@@ -126,7 +126,9 @@ public class AddressBookMain {
         	System.out.println("5 Sort Contacts by City");
         	System.out.println("6 Sort Contacts by State");
         	System.out.println("7 Sort Contacts by Zip");
-        	System.out.println("8 Back");
+        	System.out.println("8 Write Contacts to File");
+        	System.out.println("9 Read Contacts from File");
+        	System.out.println("10 Back");
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -217,6 +219,14 @@ public class AddressBookMain {
                     break;
 
                 case 8:
+                    service.writeContactsToFile();
+                    break;
+
+                case 9:
+                    service.readContactsFromFile();
+                    break;
+
+                case 10:
                     return;
 
                 default:
