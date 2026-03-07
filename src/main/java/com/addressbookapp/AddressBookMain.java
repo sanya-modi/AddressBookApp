@@ -21,9 +21,11 @@ public class AddressBookMain {
             System.out.println("3 Show AddressBooks");
             System.out.println("4 Search Person by City");
             System.out.println("5 Search Person by State");
-            System.out.println("6 View Person by City");
-            System.out.println("7 View Person by State");
-            System.out.println("8 Exit");
+            System.out.println("6 View Persons by City");
+            System.out.println("7 View Persons by State");
+            System.out.println("8 Count Persons by City");
+            System.out.println("9 Count Persons by State");
+            System.out.println("10 Exit");
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -55,7 +57,7 @@ public class AddressBookMain {
 
                     System.out.println("\nAddressBook '" + bookName + "' opened successfully.");
 
-                    addressBookMenu(service,scanner);
+                    addressBookMenu(service,scanner, manager);
                     break;
 
                 case 3:
@@ -93,6 +95,18 @@ public class AddressBookMain {
 
                     manager.viewPersonsByState(viewByState);
                     break;
+                    
+                case 8:
+                    manager.countByCity();
+                    break;
+
+                case 9:
+                    manager.countByState();
+                    break;
+
+                case 10:
+                    System.out.println("Exiting AddressBook Application...");
+                    return;
 
                 default:
                     System.out.println("Invalid choice!");
@@ -100,10 +114,8 @@ public class AddressBookMain {
         }
     }
 
-    public static void addressBookMenu(AddressBookService service, Scanner scanner){
-    	
-    	AddressBookManager manager = new AddressBookManager();
-    	
+    public static void addressBookMenu(AddressBookService service, Scanner scanner, AddressBookManager manager){
+    	    	
         while(true){
 
             System.out.println("\n--- AddressBook Menu ---");

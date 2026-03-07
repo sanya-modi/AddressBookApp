@@ -129,4 +129,30 @@ public class AddressBookManager {
         stateDictionary.get(state)
                 .forEach(System.out::println);
     }
+    
+    public void countByCity(){
+
+        if(cityDictionary.isEmpty()){
+            System.out.println("No city records available.");
+            return;
+        }
+
+        System.out.println("\nContact count by City:");
+
+        cityDictionary.forEach((city, contacts) ->
+                System.out.println(city + " → " + contacts.size()));
+    }
+    
+    public void countByState(){
+
+        if(stateDictionary.isEmpty()){
+            System.out.println("No state records available.");
+            return;
+        }
+
+        System.out.println("\nContact count by State:");
+
+        stateDictionary.forEach((state, contacts) ->
+                System.out.println(state + " → " + contacts.size()));
+    }
 }
