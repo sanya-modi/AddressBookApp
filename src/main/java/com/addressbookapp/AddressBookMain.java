@@ -130,7 +130,9 @@ public class AddressBookMain {
         	System.out.println("9 Read Contacts from File");
         	System.out.println("10 Write Contacts to CSV");
         	System.out.println("11 Read Contacts from CSV");
-        	System.out.println("12 Back");
+        	System.out.println("12 Write Contacts to JSON");
+        	System.out.println("13 Read Contacts from JSON");
+        	System.out.println("14 Back");
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -237,6 +239,14 @@ public class AddressBookMain {
                     break;
 
                 case 12:
+                    service.writeContactsToJSON();
+                    break;
+
+                case 13:
+                    service.readContactsFromJSON();
+                    break;
+
+                case 14:
                     return;
 
                 default:
