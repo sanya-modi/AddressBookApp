@@ -37,6 +37,19 @@ public class AddressBookService {
         }
     }
     
+    public void sortContactsByName(){
+
+        if(contactList.isEmpty()){
+            System.out.println("No contacts available to sort.");
+            return;
+        }
+
+        contactList.stream()
+                .sorted((c1, c2) -> c1.getFirstName()
+                .compareToIgnoreCase(c2.getFirstName()))
+                .forEach(System.out::println);
+    }
+    
     public Contact findContact(String firstName) {
 
         for (Contact contact : contactList) {

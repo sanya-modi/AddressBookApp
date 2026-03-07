@@ -118,11 +118,12 @@ public class AddressBookMain {
     	    	
         while(true){
 
-            System.out.println("\n--- AddressBook Menu ---");
-            System.out.println("1 Add Contact");
-            System.out.println("2 Display Contacts");
-            System.out.println("3 Delete Contact");
-            System.out.println("4 Back");
+        	System.out.println("\n--- AddressBook Menu ---");
+        	System.out.println("1 Add Contact");
+        	System.out.println("2 Display Contacts");
+        	System.out.println("3 Delete Contact");
+        	System.out.println("4 Sort Contacts by Name");
+        	System.out.println("5 Back");
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -197,6 +198,10 @@ public class AddressBookMain {
                     break;
 
                 case 4:
+                    service.sortContactsByName();
+                    break;
+
+                case 5:
                     return;
 
                 default:
