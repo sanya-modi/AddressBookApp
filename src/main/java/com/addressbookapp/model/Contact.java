@@ -1,12 +1,7 @@
 package com.addressbookapp.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Objects;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Contact {
 
 	private String firstName;
@@ -100,6 +95,22 @@ public class Contact {
 		this.email = email;
 	}
 	
-	
+	 @Override
+	    public boolean equals(Object o) {
+
+	        if (this == o) return true;
+
+	        if (o == null || getClass() != o.getClass()) return false;
+
+	        Contact contact = (Contact) o;
+
+	        return firstName.equalsIgnoreCase(contact.firstName) &&
+	               lastName.equalsIgnoreCase(contact.lastName);
+	    }
+
+	    @Override
+	    public int hashCode() {
+	        return Objects.hash(firstName.toLowerCase(), lastName.toLowerCase());
+	    }
 
 }

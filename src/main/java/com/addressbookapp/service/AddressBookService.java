@@ -12,8 +12,18 @@ public class AddressBookService {
 
     private List<Contact> contactList = new ArrayList<>();
 
-    public void addContact(Contact contact) {
+    public boolean addContact(Contact contact){
+
+        boolean duplicate = contactList
+                .stream()
+                .anyMatch(c -> c.equals(contact));
+
+        if(duplicate){
+            return false;
+        }
+
         contactList.add(contact);
+        return true;
     }
 
     public void displayContacts() {

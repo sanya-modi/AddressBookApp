@@ -86,21 +86,49 @@ public class AddressBookMain {
 
                 case 1:
 
-                    System.out.print("First Name: ");
-                    String firstName = scanner.nextLine();
+                    char addMore;
 
-                    System.out.print("Last Name: ");
-                    String lastName = scanner.nextLine();
+                    do{
 
-                    System.out.print("City: ");
-                    String city = scanner.nextLine();
+                        System.out.print("First Name: ");
+                        String firstName = scanner.nextLine();
 
-                    System.out.print("Phone Number: ");
-                    String phone = scanner.nextLine();
+                        System.out.print("Last Name: ");
+                        String lastName = scanner.nextLine();
 
-                    Contact contact = new Contact(firstName,lastName,"",city,"","",phone,"");
+                        System.out.print("Address: ");
+                        String address = scanner.nextLine();
 
-                    service.addContact(contact);
+                        System.out.print("City: ");
+                        String city = scanner.nextLine();
+
+                        System.out.print("State: ");
+                        String state = scanner.nextLine();
+
+                        System.out.print("Zip: ");
+                        String zip = scanner.nextLine();
+
+                        System.out.print("Phone Number: ");
+                        String phone = scanner.nextLine();
+
+                        System.out.print("Email: ");
+                        String email = scanner.nextLine();
+
+                        Contact contact = new Contact(firstName,lastName,address,city,state,zip,phone,email);
+
+                        boolean added = service.addContact(contact);
+
+                        if(added)
+                            System.out.println("Contact Added Successfully!");
+                        else
+                            System.out.println("Duplicate contact found! Contact not added.");
+
+                        System.out.print("Do you want to add another contact? (y/n): ");
+                        addMore = scanner.next().charAt(0);
+                        scanner.nextLine();
+
+                    }while(addMore == 'y' || addMore == 'Y');
+
                     break;
 
                 case 2:
