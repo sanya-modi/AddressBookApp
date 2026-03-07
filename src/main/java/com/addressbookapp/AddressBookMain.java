@@ -19,7 +19,9 @@ public class AddressBookMain {
             System.out.println("1 Create AddressBook");
             System.out.println("2 Select AddressBook");
             System.out.println("3 Show AddressBooks");
-            System.out.println("4 Exit");
+            System.out.println("4 Search Person by City");
+            System.out.println("5 Search Person by State");
+            System.out.println("6 Exit");
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -59,6 +61,22 @@ public class AddressBookMain {
                     break;
 
                 case 4:
+
+                    System.out.print("Enter City name: ");
+                    String city = scanner.nextLine();
+
+                    manager.searchByCity(city);
+                    break;
+
+                case 5:
+
+                    System.out.print("Enter State name: ");
+                    String state = scanner.nextLine();
+
+                    manager.searchByState(state);
+                    break;
+
+                case 6:
                     System.out.println("Exiting AddressBook Application...");
                     return;
 

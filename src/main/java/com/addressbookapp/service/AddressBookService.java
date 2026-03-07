@@ -65,4 +65,8 @@ public class AddressBookService {
         return false;
     }
     
+    public List<Contact> getContacts(){
+        return contactList;
+    }
+    
 }

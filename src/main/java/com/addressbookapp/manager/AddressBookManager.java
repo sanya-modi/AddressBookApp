@@ -37,4 +37,54 @@ public class AddressBookManager {
             System.out.println("- " + name);
         }
     }
+    
+    public void searchByCity(String city){
+
+        System.out.println("\nPersons in city: " + city);
+
+        boolean found = false;
+
+        for(Map.Entry<String, AddressBookService> entry : addressBooks.entrySet()){
+
+            String bookName = entry.getKey();
+            AddressBookService service = entry.getValue();
+
+            for(var contact : service.getContacts()){
+
+                if(contact.getCity().equalsIgnoreCase(city)){
+                    System.out.println(contact + " | AddressBook: " + bookName);
+                    found = true;
+                }
+            }
+        }
+
+        if(!found){
+            System.out.println("No person found in city: " + city);
+        }
+    }
+
+    public void searchByState(String state){
+
+        System.out.println("\nPersons in state: " + state);
+
+        boolean found = false;
+
+        for(Map.Entry<String, AddressBookService> entry : addressBooks.entrySet()){
+
+            String bookName = entry.getKey();
+            AddressBookService service = entry.getValue();
+
+            for(var contact : service.getContacts()){
+
+                if(contact.getState().equalsIgnoreCase(state)){
+                    System.out.println(contact + " | AddressBook: " + bookName);
+                    found = true;
+                }
+            }
+        }
+
+        if(!found){
+            System.out.println("No person found in state: " + state);
+        }
+    }
 }
