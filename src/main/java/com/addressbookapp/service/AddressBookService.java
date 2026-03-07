@@ -12,7 +12,7 @@ public class AddressBookService {
 
     private List<Contact> contactList = new ArrayList<>();
     private static final String FILE_PATH = "AddressBook.txt";
-    private static final String JSON_FILE = "AddressBook.json";
+    private static final String CSV_FILE = "AddressBook.csv";
 
     public boolean addContact(Contact contact){
 
@@ -159,43 +159,53 @@ public class AddressBookService {
         }
     }
     
-    public void writeContactsToJson(){
+    public void writeContactsToCSV() {
 
-        try{
+        try {
 
-            com.fasterxml.jackson.databind.ObjectMapper mapper =
-                    new com.fasterxml.jackson.databind.ObjectMapper();
+            java.io.PrintWriter writer = new java.io.PrintWriter(new java.io.File(CSV_FILE));
 
-            mapper.writeValue(
-                    new java.io.File(JSON_FILE),
-                    contactList
-            );
+            writer.println("firstName,lastName,address,city,state,zip,phoneNumber,email");
 
-            System.out.println("Contacts written to JSON file successfully.");
+            for (Contact contact : contactList) {
 
-        }catch(Exception e){
-            System.out.println("Error writing JSON file: " + e.getMessage());
+                writer.println(
+                        contact.getFirstName() + "," +
+                        contact.getLastName() + "," +
+                        contact.getAddress() + "," +
+                        contact.getCity() + "," +
+                        contact.getState() + "," +
+                        contact.getZip() + "," +
+                        contact.getPhoneNumber() + "," +
+                        contact.getEmail()
+                );
+            }
+
+            writer.close();
+
+            System.out.println("Contacts written to CSV file successfully.");
+
+        } catch (Exception e) {
+            System.out.println("Error writing CSV file: " + e.getMessage());
         }
     }
     
-    public void readContactsFromJson(){
+    public void readContactsFromCSV() {
 
-        try{
+        try {
 
-            com.fasterxml.jackson.databind.ObjectMapper mapper =
-                    new com.fasterxml.jackson.databind.ObjectMapper();
+            java.nio.file.Path path = java.nio.file.Paths.get(CSV_FILE);
 
-            List<Contact> contacts = mapper.readValue(
-                    new java.io.File(JSON_FILE),
-                    new com.fasterxml.jackson.core.type.TypeReference<List<Contact>>() {}
-            );
+            java.util.List<String> lines = java.nio.file.Files.readAllLines(path);
 
-            System.out.println("\nContacts from JSON file:");
+            System.out.println("\nContacts from CSV file:");
 
-            contacts.forEach(System.out::println);
+            for (int i = 1; i < lines.size(); i++) {   // skip header
+                System.out.println(lines.get(i));
+            }
 
-        }catch(Exception e){
-            System.out.println("Error reading JSON file: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error reading CSV file: " + e.getMessage());
         }
     }
     

@@ -128,8 +128,8 @@ public class AddressBookMain {
         	System.out.println("7 Sort Contacts by Zip");
         	System.out.println("8 Write Contacts to File");
         	System.out.println("9 Read Contacts from File");
-        	System.out.println("10 Write Contacts to JSON");
-        	System.out.println("11 Read Contacts from JSON");
+        	System.out.println("10 Write Contacts to CSV");
+        	System.out.println("11 Read Contacts from CSV");
         	System.out.println("12 Back");
 
             System.out.print("Enter your choice: ");
@@ -229,11 +229,11 @@ public class AddressBookMain {
                     break;
 
                 case 10:
-                    service.writeContactsToJson();
+                    service.writeContactsToCSV();
                     break;
 
                 case 11:
-                    service.readContactsFromJson();
+                    service.readContactsFromCSV();
                     break;
 
                 case 12:
