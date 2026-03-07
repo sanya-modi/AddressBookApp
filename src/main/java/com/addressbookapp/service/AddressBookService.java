@@ -12,6 +12,7 @@ public class AddressBookService {
 
     private List<Contact> contactList = new ArrayList<>();
     private static final String FILE_PATH = "AddressBook.txt";
+    private static final String JSON_FILE = "AddressBook.json";
 
     public boolean addContact(Contact contact){
 
@@ -155,6 +156,46 @@ public class AddressBookService {
 
         }catch(Exception e){
             System.out.println("Error reading file: " + e.getMessage());
+        }
+    }
+    
+    public void writeContactsToJson(){
+
+        try{
+
+            com.fasterxml.jackson.databind.ObjectMapper mapper =
+                    new com.fasterxml.jackson.databind.ObjectMapper();
+
+            mapper.writeValue(
+                    new java.io.File(JSON_FILE),
+                    contactList
+            );
+
+            System.out.println("Contacts written to JSON file successfully.");
+
+        }catch(Exception e){
+            System.out.println("Error writing JSON file: " + e.getMessage());
+        }
+    }
+    
+    public void readContactsFromJson(){
+
+        try{
+
+            com.fasterxml.jackson.databind.ObjectMapper mapper =
+                    new com.fasterxml.jackson.databind.ObjectMapper();
+
+            List<Contact> contacts = mapper.readValue(
+                    new java.io.File(JSON_FILE),
+                    new com.fasterxml.jackson.core.type.TypeReference<List<Contact>>() {}
+            );
+
+            System.out.println("\nContacts from JSON file:");
+
+            contacts.forEach(System.out::println);
+
+        }catch(Exception e){
+            System.out.println("Error reading JSON file: " + e.getMessage());
         }
     }
     
