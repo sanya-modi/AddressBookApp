@@ -21,7 +21,9 @@ public class AddressBookMain {
             System.out.println("3 Show AddressBooks");
             System.out.println("4 Search Person by City");
             System.out.println("5 Search Person by State");
-            System.out.println("6 Exit");
+            System.out.println("6 View Person by City");
+            System.out.println("7 View Person by State");
+            System.out.println("8 Exit");
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -77,8 +79,20 @@ public class AddressBookMain {
                     break;
 
                 case 6:
-                    System.out.println("Exiting AddressBook Application...");
-                    return;
+
+                    System.out.print("Enter City: ");
+                    String viewByCity = scanner.nextLine();
+
+                    manager.viewPersonsByCity(viewByCity);
+                    break;
+
+                case 7:
+
+                    System.out.print("Enter State: ");
+                    String viewByState = scanner.nextLine();
+
+                    manager.viewPersonsByState(viewByState);
+                    break;
 
                 default:
                     System.out.println("Invalid choice!");
@@ -87,7 +101,9 @@ public class AddressBookMain {
     }
 
     public static void addressBookMenu(AddressBookService service, Scanner scanner){
-
+    	
+    	AddressBookManager manager = new AddressBookManager();
+    	
         while(true){
 
             System.out.println("\n--- AddressBook Menu ---");
@@ -136,10 +152,13 @@ public class AddressBookMain {
 
                         boolean added = service.addContact(contact);
 
-                        if(added)
+                        if(added){
+                            manager.updateDictionaries(contact);
                             System.out.println("Contact Added Successfully!");
-                        else
+                        }
+                        else{
                             System.out.println("Duplicate contact found! Contact not added.");
+                        }
 
                         System.out.print("Do you want to add another contact? (y/n): ");
                         addMore = scanner.next().charAt(0);
