@@ -123,7 +123,10 @@ public class AddressBookMain {
         	System.out.println("2 Display Contacts");
         	System.out.println("3 Delete Contact");
         	System.out.println("4 Sort Contacts by Name");
-        	System.out.println("5 Back");
+        	System.out.println("5 Sort Contacts by City");
+        	System.out.println("6 Sort Contacts by State");
+        	System.out.println("7 Sort Contacts by Zip");
+        	System.out.println("8 Back");
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -202,6 +205,18 @@ public class AddressBookMain {
                     break;
 
                 case 5:
+                    service.sortContactsByCity();
+                    break;
+
+                case 6:
+                    service.sortContactsByState();
+                    break;
+
+                case 7:
+                    service.sortContactsByZip();
+                    break;
+
+                case 8:
                     return;
 
                 default:

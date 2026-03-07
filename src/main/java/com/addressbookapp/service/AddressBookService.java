@@ -50,6 +50,42 @@ public class AddressBookService {
                 .forEach(System.out::println);
     }
     
+    public void sortContactsByCity(){
+
+        if(contactList.isEmpty()){
+            System.out.println("No contacts available.");
+            return;
+        }
+
+        contactList.stream()
+                .sorted(java.util.Comparator.comparing(Contact::getCity))
+                .forEach(System.out::println);
+    }
+    
+    public void sortContactsByState(){
+
+        if(contactList.isEmpty()){
+            System.out.println("No contacts available.");
+            return;
+        }
+
+        contactList.stream()
+                .sorted(java.util.Comparator.comparing(Contact::getState))
+                .forEach(System.out::println);
+    }
+    
+    public void sortContactsByZip(){
+
+        if(contactList.isEmpty()){
+            System.out.println("No contacts available.");
+            return;
+        }
+
+        contactList.stream()
+                .sorted(java.util.Comparator.comparing(Contact::getZip))
+                .forEach(System.out::println);
+    }
+    
     public Contact findContact(String firstName) {
 
         for (Contact contact : contactList) {
