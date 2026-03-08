@@ -1,7 +1,9 @@
 package com.addressbookapp.entity;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,6 +41,8 @@ public class Contact {
 	private String zip;
 	private String phoneNumber;
 	private String email;
+	@Column(name = "date_added")
+	private LocalDate dateAdded;
 	
 	@ManyToOne
 	@JoinColumn(name = "address_book_id")
@@ -101,6 +105,10 @@ public class Contact {
 	public String getCity() {
 	    return city;
 	}
+	
+	public void setDateAdded(LocalDate dateAdded) {
+	    this.dateAdded = dateAdded;
+	}
 
 	public String getState() {
 	    return state;
@@ -109,7 +117,10 @@ public class Contact {
 		return address; 
 	}
 
-	// getters
+	public LocalDate getDateAdded() {
+	    return dateAdded;
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}

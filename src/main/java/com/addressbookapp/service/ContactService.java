@@ -2,6 +2,7 @@ package com.addressbookapp.service;
 
 
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 
@@ -25,14 +26,16 @@ public class ContactService {
     private ContactRepository contactRepository;
 
     /**
-     * UC2
-     * Add new contact
+     * UC18
+     * Update Add new contact
      */
     public Contact addContact(Contact contact) {
 
         if(contactRepository.existsByEmail(contact.getEmail())) {
             throw new RuntimeException("Contact with this email already exists");
         }
+
+        contact.setDateAdded(LocalDate.now());
 
         return contactRepository.save(contact);
     }
@@ -169,5 +172,10 @@ public class ContactService {
         }
 
         return contactRepository.saveAll(contacts);
+    }
+    
+    public List<Contact> getContactsAddedBetween(LocalDate startDate, LocalDate endDate) {
+
+        return contactRepository.findByDateAddedBetween(startDate, endDate);
     }
 }

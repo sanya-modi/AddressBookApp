@@ -1,5 +1,6 @@
 package com.addressbookapp.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,5 +144,16 @@ public class ContactController {
     @PostMapping("/add-multiple")
     public List<Contact> addMultipleContacts(@RequestBody List<Contact> contacts) {
         return contactService.addMultipleContacts(contacts);
+    }
+    
+    @GetMapping("/date-range")
+    public List<Contact> getContactsByDateRange(
+            @RequestParam String startDate,
+            @RequestParam String endDate) {
+
+        return contactService.getContactsAddedBetween(
+                LocalDate.parse(startDate),
+                LocalDate.parse(endDate)
+        );
     }
 }

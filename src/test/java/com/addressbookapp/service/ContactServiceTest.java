@@ -2,6 +2,7 @@ package com.addressbookapp.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -96,5 +97,17 @@ public class ContactServiceTest {
         List<Contact> savedContacts = contactService.addMultipleContacts(contacts);
 
         assertEquals(2, savedContacts.size());
+    }
+    
+    @Test
+    void shouldRetrieveContactsByDateRange() {
+
+        List<Contact> contacts =
+                contactService.getContactsAddedBetween(
+                        LocalDate.now().minusDays(5),
+                        LocalDate.now()
+                );
+
+        assertNotNull(contacts);
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
+import java.time.LocalDate;
 import com.addressbookapp.entity.Contact;
 
 /**
@@ -46,5 +46,7 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     long countByStateIgnoreCase(String state);
     
     boolean existsByEmail(String email);
+    
+    List<Contact> findByDateAddedBetween(LocalDate startDate, LocalDate endDate);
 
 }
