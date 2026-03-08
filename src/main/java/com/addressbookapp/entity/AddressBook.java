@@ -7,44 +7,42 @@ import java.util.List;
 @Table(name = "address_books")
 public class AddressBook {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private String name;
+    private String name;
 
-	@OneToMany(mappedBy = "addressBook", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Contact> contacts;
+    @OneToMany(mappedBy = "addressBook", cascade = CascadeType.ALL)
+    private List<Contact> contacts;
 
-	public AddressBook() {
-	}
+    public AddressBook() {}
 
-	public AddressBook(String name) {
-		this.name = name;
-	}
+    public AddressBook(String name) {
+        this.name = name;
+    }
 
-	// getters & setters
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public List<Contact> getContacts() {
-		return contacts;
-	}
+    public List<Contact> getContacts() {
+        return contacts;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setContacts(List<Contact> contacts) {
-		this.contacts = contacts;
-	}
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
 }

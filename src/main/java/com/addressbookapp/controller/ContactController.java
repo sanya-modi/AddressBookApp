@@ -156,4 +156,14 @@ public class ContactController {
                 LocalDate.parse(endDate)
         );
     }
+    
+    @GetMapping("/db/count/city/{city}")
+    public int getContactCountByCity(@PathVariable String city) {
+        return contactService.getContactCountByCity(city);
+    }
+    
+    @GetMapping("/db/count/state/{state}")
+    public int getContactCountByState(@PathVariable String state) {
+        return contactService.getContactCountByState(state);
+    }
 }

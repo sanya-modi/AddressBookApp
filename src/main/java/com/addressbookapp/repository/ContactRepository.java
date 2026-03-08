@@ -1,11 +1,13 @@
 package com.addressbookapp.repository;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import java.time.LocalDate;
+
 import com.addressbookapp.entity.Contact;
 
 /**
@@ -48,5 +50,11 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     boolean existsByEmail(String email);
     
     List<Contact> findByDateAddedBetween(LocalDate startDate, LocalDate endDate);
+    
+    @Query(value = "SELECT count_contacts_by_city(?1)", nativeQuery = true)
+    int countContactsByCityFunction(String city);
+
+    @Query(value = "SELECT count_contacts_by_state(?1)", nativeQuery = true)
+    int countContactsByStateFunction(String state);
 
 }

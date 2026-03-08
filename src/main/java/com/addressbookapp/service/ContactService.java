@@ -178,4 +178,12 @@ public class ContactService {
 
         return contactRepository.findByDateAddedBetween(startDate, endDate);
     }
+    
+    public int getContactCountByCity(String city) {
+        return contactRepository.countContactsByCityFunction(city);
+    }
+    
+    public int getContactCountByState(String state) {
+        return contactRepository.countContactsByStateFunction(state);
+    }
 }
