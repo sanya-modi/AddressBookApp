@@ -5,6 +5,9 @@ package com.addressbookapp.service;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -203,5 +206,37 @@ public class ContactService {
         contact.setDateAdded(LocalDate.now());
 
         return contactRepository.save(contact);
+    }
+    
+    @Transactional
+    public void addMultipleContacts(Long addressBookId, List<Contact> contacts) {
+
+        AddressBook addressBook = addressBookRepository.findById(addressBookId)
+                .orElseThrow(() -> new RuntimeException("AddressBook not found"));
+
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+
+        for (Contact contact : contacts) {
+
+            executor.submit(() -> {
+
+                contact.setAddressBook(addressBook);
+                contact.setDateAdded(LocalDate.now());
+
+                contactRepository.save(contact);
+
+                System.out.println("Contact inserted by Thread: " + Thread.currentThread().getName());
+
+            });
+
+        }
+
+        executor.shutdown();
+
+        try {
+            executor.awaitTermination(5, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

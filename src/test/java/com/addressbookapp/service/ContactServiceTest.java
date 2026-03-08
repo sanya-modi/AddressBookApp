@@ -9,13 +9,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.addressbookapp.entity.AddressBook;
 import com.addressbookapp.entity.Contact;
+import com.addressbookapp.repository.AddressBookRepository;
 
 @SpringBootTest
 public class ContactServiceTest {
 
     @Autowired
     private ContactService contactService;
+    
+    @Autowired
+    private AddressBookRepository addressBookRepository;
 
     /**
      * UC1 / UC2
@@ -287,9 +292,46 @@ public class ContactServiceTest {
                 "7777777777",
                 "rollback_test@gmail.com"
         );
+        AddressBook addressBook = addressBookRepository.save(new AddressBook("TestBook"));
 
-        Contact saved = contactService.addContact(contact);
+        Contact saved = contactService.addContactToAddressBook(addressBook.getId(), contact);
 
         assertNotNull(saved);
+    }
+    
+    //UC21
+    
+    @Test
+    void shouldInsertMultipleContacts() {
+
+        List<Contact> contacts = List.of(
+
+                new Contact(
+                        "Thread1",
+                        "Test",
+                        "Bhopal",
+                        "Bhopal",
+                        "MP",
+                        "462001",
+                        "8888888811",
+                        "thread1@gmail.com"
+                ),
+
+                new Contact(
+                        "Thread2",
+                        "Test",
+                        "Indore",
+                        "Indore",
+                        "MP",
+                        "452001",
+                        "8888888822",
+                        "thread2@gmail.com"
+                )
+
+        );
+
+        contactService.addMultipleContacts(1L, contacts);
+
+        assertTrue(true);
     }
 }

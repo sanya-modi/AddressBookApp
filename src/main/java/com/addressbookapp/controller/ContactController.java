@@ -166,4 +166,14 @@ public class ContactController {
     public int getContactCountByState(@PathVariable String state) {
         return contactService.getContactCountByState(state);
     }
+    
+    @PostMapping("/addressbook/{id}/multiple")
+    public String addMultipleContacts(
+            @PathVariable Long id,
+            @RequestBody List<Contact> contacts) {
+
+        contactService.addMultipleContacts(id, contacts);
+
+        return "Multiple contacts inserted successfully";
+    }
 }
