@@ -139,4 +139,57 @@ public class JsonServerContactTest {
 
         assertEquals("Mumbai", updatedContact.getCity());
     }
+    
+    //UC25
+    
+    @Test
+    void shouldDeleteContactFromJsonServer() {
+
+        // Step 1: Get all contacts
+        Contact[] contacts =
+                given()
+                .when()
+                .get("http://localhost:3000/contacts")
+                .then()
+                .statusCode(200)
+                .extract()
+                .as(Contact[].class);
+
+        assertTrue(contacts.length > 0);
+
+        Contact contactToDelete = contacts[0];
+
+        Long contactId = contactToDelete.getId();
+
+        System.out.println("Deleting Contact ID: " + contactId);
+
+        // Step 2: Delete contact from JSON Server
+        given()
+            .when()
+            .delete("http://localhost:3000/contacts/" + contactId)
+            .then()
+            .statusCode(200);
+
+        // Step 3: Sync AddressBook Memory
+        addressBookMemory.removeIf(contact -> contact.getId().equals(contactId));
+
+        System.out.println("Contact deleted successfully");
+
+        // Step 4: Verify deletion
+        Response response =
+                given()
+                .when()
+                .get("http://localhost:3000/contacts")
+                .then()
+                .statusCode(200)
+                .extract()
+                .response();
+
+        Contact[] updatedContacts = response.as(Contact[].class);
+
+        boolean exists = Arrays.stream(updatedContacts)
+                .anyMatch(contact -> contact.getId().equals(contactId));
+
+        assertFalse(exists);
+    }
 }
