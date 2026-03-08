@@ -65,4 +65,36 @@ public class ContactServiceTest {
 
         System.out.println("Total contacts in " + state + ": " + count);
     }
+    
+    @Test
+    void shouldAddMultipleContacts() {
+
+        Contact c1 = new Contact(
+                "Rahul",
+                "Sharma",
+                "Delhi",
+                "Delhi",
+                "DL",
+                "110001",
+                "8888888888",
+                "rahul@test.com"
+        );
+
+        Contact c2 = new Contact(
+                "Ankit",
+                "Verma",
+                "Noida",
+                "Noida",
+                "UP",
+                "201301",
+                "7777777777",
+                "ankit@test.com"
+        );
+
+        List<Contact> contacts = List.of(c1, c2);
+
+        List<Contact> savedContacts = contactService.addMultipleContacts(contacts);
+
+        assertEquals(2, savedContacts.size());
+    }
 }

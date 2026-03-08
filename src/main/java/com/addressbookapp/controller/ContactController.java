@@ -139,4 +139,9 @@ public class ContactController {
     public List<Contact> sortByZip() {
         return contactService.sortByZip();
     }
+    
+    @PostMapping("/add-multiple")
+    public List<Contact> addMultipleContacts(@RequestBody List<Contact> contacts) {
+        return contactService.addMultipleContacts(contacts);
+    }
 }

@@ -158,4 +158,16 @@ public class ContactService {
 
         return contacts;
     }
+    
+    public List<Contact> addMultipleContacts(List<Contact> contacts) {
+
+        for(Contact contact : contacts) {
+
+            if(contactRepository.existsByEmail(contact.getEmail())) {
+                throw new RuntimeException("Contact already exists with email: " + contact.getEmail());
+            }
+        }
+
+        return contactRepository.saveAll(contacts);
+    }
 }
