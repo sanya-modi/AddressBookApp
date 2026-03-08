@@ -8,9 +8,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.addressbookapp.entity.AddressBook;
 import com.addressbookapp.entity.Contact;
 import com.addressbookapp.repository.ContactRepository;
+import com.addressbookapp.repository.AddressBookRepository;
 
 /**
  * ContactService contains the business logic of the Address Book system.
@@ -24,6 +27,9 @@ public class ContactService {
 
     @Autowired
     private ContactRepository contactRepository;
+    
+    @Autowired
+    private AddressBookRepository addressBookRepository;
 
     /**
      * UC18
@@ -185,5 +191,17 @@ public class ContactService {
     
     public int getContactCountByState(String state) {
         return contactRepository.countContactsByStateFunction(state);
+    }
+    
+    @Transactional
+    public Contact addContactToAddressBook(Long addressBookId, Contact contact) {
+
+        AddressBook addressBook = addressBookRepository.findById(addressBookId)
+                .orElseThrow(() -> new RuntimeException("AddressBook not found"));
+
+        contact.setAddressBook(addressBook);
+        contact.setDateAdded(LocalDate.now());
+
+        return contactRepository.save(contact);
     }
 }

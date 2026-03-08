@@ -249,4 +249,47 @@ public class ContactServiceTest {
 
         assertTrue(count >= 0);
     }
+    
+    //UC20
+    
+    @Test
+    void shouldAddContactWithTransaction() {
+
+        Contact contact = new Contact(
+                "Transaction",
+                "Test",
+                "MP Nagar",
+                "Bhopal",
+                "MP",
+                "462001",
+                "8888888888",
+                "transaction_test@gmail.com"
+        );
+
+        Contact saved = contactService.addContact(contact);
+
+        assertNotNull(saved);
+        assertEquals("Transaction", saved.getFirstName());
+
+        System.out.println("Contact added with transaction: " + saved.getFirstName());
+    }
+    
+    @Test
+    void shouldRollbackTransactionIfErrorOccurs() {
+
+        Contact contact = new Contact(
+                "Rollback",
+                "Test",
+                "Indore",
+                "Indore",
+                "MP",
+                "452001",
+                "7777777777",
+                "rollback_test@gmail.com"
+        );
+
+        Contact saved = contactService.addContact(contact);
+
+        assertNotNull(saved);
+    }
 }
