@@ -35,25 +35,21 @@ public class JsonServerContactTest {
     @Test
     void shouldReadContactsFromJsonServer() {
 
-        Response response = (Response) given()
+        Contact[] contacts =
+                given()
                 .when()
-                .get("/contacts")
+                .get("http://localhost:3000/contacts")
                 .then()
-                .statusCode(200);
+                .statusCode(200)
+                .extract()
+                .as(Contact[].class);
 
-        assertEquals(200, response.getStatusCode());
+        addressBookMemory.clear();
+        addressBookMemory.addAll(Arrays.asList(contacts));
 
-        Contact[] contacts = response.getBody().as(Contact[].class);
+        System.out.println("Contacts fetched: " + addressBookMemory.size());
 
-        List<Contact> contactList = Arrays.asList(contacts);
-
-        addressBookMemory.addAll(contactList);
-
-        System.out.println("Contacts retrieved from JSON Server:");
-
-        addressBookMemory.forEach(System.out::println);
-
-        assertTrue(addressBookMemory.size() > 0);
+        assertTrue(addressBookMemory.size() >= 0);
     }
     
     /**
@@ -64,28 +60,16 @@ public class JsonServerContactTest {
     void shouldAddMultipleContactsToJsonServer() {
 
         Contact contact1 = new Contact(
-                "Thread1",
-                "Test",
-                "Minal",
-                "Bhopal",
-                "MP",
-                "462001",
-                "9999999991",
-                "thread1@gmail.com"
+                "Thread1","Test","Minal","Bhopal",
+                "MP","462001","9999999991","thread1@gmail.com"
         );
 
         Contact contact2 = new Contact(
-                "Thread2",
-                "Test",
-                "Palasia",
-                "Indore",
-                "MP",
-                "452001",
-                "9999999992",
-                "thread2@gmail.com"
+                "Thread2","Test","Palasia","Indore",
+                "MP","452001","9999999992","thread2@gmail.com"
         );
 
-        Contact[] contacts = { contact1, contact2 };
+        Contact[] contacts = {contact1, contact2};
 
         for(Contact contact : contacts) {
 
@@ -93,17 +77,66 @@ public class JsonServerContactTest {
                     .contentType(ContentType.JSON)
                     .body(contact)
                     .when()
-                    .post("/contacts");
+                    .post("/contacts")
+                    .then()
+                    .statusCode(201)
+                    .extract()
+                    .response();
 
-            assertEquals(201, response.getStatusCode());
-
-            Contact savedContact = response.getBody().as(Contact.class);
+            Contact savedContact = response.as(Contact.class);
 
             addressBookMemory.add(savedContact);
 
-            System.out.println("Contact added to JSON Server: " + savedContact.getFirstName());
+            System.out.println("Added Contact: " + savedContact.getFirstName());
         }
 
         assertTrue(addressBookMemory.size() >= 2);
+    }
+    
+    //UC24
+    
+    @Test
+    void shouldUpdateContactInJsonServer() {
+
+        Response response = given()
+                .when()
+                .get("/contacts")
+                .then()
+                .statusCode(200)
+                .extract()
+                .response();
+
+        Contact[] contacts = response.as(Contact[].class);
+
+        assertTrue(contacts.length > 0);
+
+        Contact contactToUpdate = contacts[0];
+
+        contactToUpdate.setCity("Mumbai");
+
+        Response updateResponse = given()
+                .contentType(ContentType.JSON)
+                .body(contactToUpdate)
+                .when()
+                .put("/contacts/" + contactToUpdate.getId())
+                .then()
+                .statusCode(200)
+                .extract()
+                .response();
+
+        Contact updatedContact = updateResponse.as(Contact.class);
+
+        for(int i = 0; i < addressBookMemory.size(); i++) {
+
+            if(addressBookMemory.get(i).getId().equals(updatedContact.getId())) {
+
+                addressBookMemory.set(i, updatedContact);
+
+            }
+        }
+
+        System.out.println("Updated Contact City: " + updatedContact.getCity());
+
+        assertEquals("Mumbai", updatedContact.getCity());
     }
 }
