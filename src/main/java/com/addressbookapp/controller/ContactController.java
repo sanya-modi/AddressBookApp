@@ -133,7 +133,7 @@ public class ContactController {
     }
 
     /**
-     * UC12
+     *  UC12
      * Sort contacts by zip
      */
     @GetMapping("/sort/zip")
